@@ -1,0 +1,614 @@
+
+{# REGISTRATION EMAIL TEMPLATE #}
+{% if template_name == 'registration' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Vision-Talk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 32px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 42px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+        }
+        
+        .content {
+            padding: 40px 32px;
+            background: white;
+        }
+        
+        .greeting {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+        }
+        
+        .message {
+            color: #4a5568;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .code-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #667eea;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin: 24px 0;
+        }
+        
+        .code-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        
+        .code {
+            font-family: 'Courier New', monospace;
+            font-size: 48px;
+            font-weight: 800;
+            color: #764ba2;
+            letter-spacing: 8px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 8px;
+        }
+        
+        .warning-text {
+            color: #856404;
+            font-size: 14px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 24px 32px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer-text {
+            color: #6c757d;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 600px) {
+            .content { padding: 24px 20px; }
+            .code { font-size: 32px; letter-spacing: 4px; }
+            .logo { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                Vision<span>Talk</span>
+            </div>
+            <div class="subtitle">Intelligent Video Analysis Platform</div>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Welcome to Vision-Talk, {{ username }}! 🎉
+            </div>
+            
+            <div class="message">
+                Thank you for choosing Vision-Talk. Your account has been successfully created with email: <strong>{{ email }}</strong>
+            </div>
+            
+            <div class="code-box">
+                <div class="code-label">Your Permanent Recovery Code</div>
+                <div class="code">{{ code }}</div>
+            </div>
+            
+            <div class="warning">
+                <div class="warning-title">
+                    ⚠️ IMPORTANT - Save This Code
+                </div>
+                <div class="warning-text">
+                    • This code is PERMANENT and will never change<br>
+                    • Use it to login if you forget your password<br>
+                    • Store it in a safe place<br>
+                    • Keep it confidential - never share with anyone
+                </div>
+            </div>
+            
+            <div class="message">
+                You can login using either:
+                <ul style="margin-top: 12px; margin-left: 20px;">
+                    <li>Your password</li>
+                    <li>This 6-digit recovery code</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-text">
+                &copy; 2024 Vision-Talk. All rights reserved.
+            </div>
+            <div class="footer-text">
+                This is an automated message, please do not reply.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endif %}
+
+{# RESET CODE EMAIL TEMPLATE #}
+{% if template_name == 'reset_code' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset - Vision-Talk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 32px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 42px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+        }
+        
+        .content {
+            padding: 40px 32px;
+            background: white;
+        }
+        
+        .greeting {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+        }
+        
+        .message {
+            color: #4a5568;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .code-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #667eea;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin: 24px 0;
+        }
+        
+        .code-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        
+        .code {
+            font-family: 'Courier New', monospace;
+            font-size: 48px;
+            font-weight: 800;
+            color: #764ba2;
+            letter-spacing: 8px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .timer-box {
+            background: #e8f4fd;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 8px;
+        }
+        
+        .timer-title {
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 24px 32px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer-text {
+            color: #6c757d;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 600px) {
+            .content { padding: 24px 20px; }
+            .code { font-size: 32px; letter-spacing: 4px; }
+            .logo { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                Vision<span>Talk</span>
+            </div>
+            <div class="subtitle">Intelligent Video Analysis Platform</div>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Hello {{ username }},
+            </div>
+            
+            <div class="message">
+                We received a request to reset your password for the account associated with <strong>{{ email }}</strong>.
+            </div>
+            
+            <div class="code-box">
+                <div class="code-label">Your Temporary Reset Code</div>
+                <div class="code">{{ code }}</div>
+            </div>
+            
+            <div class="timer-box">
+                <div class="timer-title">
+                    ⏰ Expires in 10 Minutes
+                </div>
+                <div style="color: #1e40af; font-size: 14px;">
+                    This code is temporary and will expire after 10 minutes for security reasons.
+                </div>
+            </div>
+            
+            <div class="message" style="font-size: 14px; color: #6c757d;">
+                <strong>Next steps:</strong><br>
+                1. Enter this 6-digit code on the password reset page<br>
+                2. Choose a new strong password<br>
+                3. You'll receive a new permanent recovery code after reset
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-text">
+                &copy; 2024 Vision-Talk. All rights reserved.
+            </div>
+            <div class="footer-text">
+                This is an automated security message.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endif %}
+
+{# NEW CODE EMAIL TEMPLATE #}
+{% if template_name == 'new_code' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Recovery Code - Vision-Talk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 32px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 42px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+        }
+        
+        .content {
+            padding: 40px 32px;
+            background: white;
+        }
+        
+        .greeting {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+        }
+        
+        .message {
+            color: #4a5568;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .success-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #667eea;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin: 24px 0;
+        }
+        
+        .success-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        
+        .code-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        
+        .code {
+            font-family: 'Courier New', monospace;
+            font-size: 48px;
+            font-weight: 800;
+            color: #764ba2;
+            letter-spacing: 8px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 8px;
+        }
+        
+        .warning-text {
+            color: #856404;
+            font-size: 14px;
+        }
+        
+        .info-box {
+            background: #e8f4fd;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 8px;
+        }
+        
+        .info-text {
+            color: #1e40af;
+            font-size: 14px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 24px 32px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer-text {
+            color: #6c757d;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 600px) {
+            .content { padding: 24px 20px; }
+            .code { font-size: 32px; letter-spacing: 4px; }
+            .logo { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                Vision<span>Talk</span>
+            </div>
+            <div class="subtitle">Intelligent Video Analysis Platform</div>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Hello {{ username }},
+            </div>
+            
+            <div class="message">
+                Your password has been successfully changed for account <strong>{{ email }}</strong>.
+            </div>
+            
+            <div class="success-box">
+                <div class="success-icon">
+                    ✓
+                </div>
+                <div class="code-label">Your NEW Permanent Recovery Code</div>
+                <div class="code">{{ code }}</div>
+            </div>
+            
+            <div class="warning">
+                <div class="warning-title">
+                    ⚠️ IMPORTANT - Save This New Code
+                </div>
+                <div class="warning-text">
+                    • This NEW code REPLACES your old recovery code<br>
+                    • Your old code will no longer work<br>
+                    • Save this code in a safe place<br>
+                    • Use it to login if you forget your password
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-text">
+                    <strong>💡 Security Tips:</strong><br>
+                    • Never share your recovery code with anyone<br>
+                    • Use a strong, unique password<br>
+                    • Enable two-factor authentication if available<br>
+                    • Keep this email for future reference
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-text">
+                &copy; 2026 Vision-Talk. All rights reserved.
+            </div>
+            <div class="footer-text">
+                This is an automated security notification.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endif %}

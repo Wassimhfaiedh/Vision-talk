@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Profile - Vision-Talk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --bg-card: #1e1e1e;
+            --border-color: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #6b6b6b;
+            --accent-primary: #667eea;
+            --accent-secondary: #764ba2;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.5), rgba(26, 26, 46, 0.5));
+            z-index: -1;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--accent-primary);
+        }
+
+        .logo span {
+            color: var(--accent-primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            padding: 8px 20px;
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.25);
+            border-color: var(--danger);
+        }
+
+        .card {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        .card h2 i {
+            color: var(--accent-primary);
+            font-size: 18px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .edit-icon {
+            color: var(--accent-primary);
+            cursor: pointer;
+            font-size: 14px;
+            transition: opacity 0.2s;
+        }
+
+        .edit-icon:hover {
+            opacity: 0.7;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); 
+            color: white; 
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        
+        .btn-secondary { 
+            background: var(--bg-tertiary); 
+            color: var(--text-secondary); 
+            border: 1px solid var(--border-color); 
+        }
+        .btn-secondary:hover { 
+            background: var(--border-color); 
+            color: var(--text-primary); 
+        }
+
+        .api-keys-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .api-key-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .api-key-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .api-key-info i {
+            font-size: 18px;
+            color: var(--accent-primary);
+        }
+
+        .api-key-info strong {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .api-key-status {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status-saved {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-missing {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .edit-btn {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .edit-btn:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            margin: auto;
+            padding: 28px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+
+        .modal-content h3 i {
+            color: var(--accent-primary);
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        /* Password wrapper styles */
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        .password-wrapper input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+
+        .password-toggle-btn:hover {
+            color: var(--accent-primary);
+        }
+
+        .inline-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+        .inline-form .password-wrapper {
+            flex: 1;
+            margin-bottom: 0;
+            min-width: 150px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--danger); }
+        .toast.info { background: var(--accent-primary); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .flash-message { display: none; }
+    </style>
+</head>
+<body>
+    <video class="video-background" autoplay loop muted playsinline>
+        <source src="{{ url_for('static', filename='istockphoto-2172401792-640_adpp_is.mp4') }}" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-video"></i>
+                <span>Vision<span>Talk</span></span>
+            </div>
+            <div class="nav-buttons">
+                <a href="{{ url_for('index') }}" class="nav-btn"><i class="fas fa-home"></i> App</a>
+                <a href="{{ url_for('logout') }}" class="nav-btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <!-- Account Information with Edit -->
+        <div class="card">
+            <h2><i class="fas fa-user-circle"></i> Account Information</h2>
+            
+            <!-- Username Row -->
+            <div class="info-row" id="usernameRow">
+                <span class="info-label">Username</span>
+                <div class="info-value">
+                    <span id="usernameDisplay">{{ user.username }}</span>
+                    <i class="fas fa-edit edit-icon" onclick="showEditUsernameModal()"></i>
+                </div>
+            </div>
+            
+            <!-- Email Row -->
+            <div class="info-row" id="emailRow">
+                <span class="info-label">Email</span>
+                <div class="info-value">
+                    <span id="emailDisplay">{{ user.email }}</span>
+                    <i class="fas fa-edit edit-icon" onclick="showEditEmailModal()"></i>
+                </div>
+            </div>
+            
+            <div class="info-row">
+                <span class="info-label">Recovery Code</span>
+                <div class="info-value">
+                    <span style="font-family: monospace; letter-spacing: 2px;">{{ user.reset_code }}</span>
+                    <i class="fas fa-copy edit-icon" onclick="copyToClipboard('{{ user.reset_code }}')" title="Copy recovery code"></i>
+                </div>
+            </div>
+            
+            <div class="info-row">
+                <span class="info-label">Member since</span>
+                <span class="info-value">{{ user.created_at.split(' ')[0] if user.created_at else 'N/A' }}</span>
+            </div>
+        </div>
+        
+        <!-- Change Password with Show/Hide -->
+        <div class="card">
+            <h2><i class="fas fa-lock"></i> Change Password</h2>
+            <form method="POST" action="{{ url_for('profile') }}" class="inline-form">
+                <input type="hidden" name="action" value="update_password">
+                
+                <!-- New Password Field with Toggle -->
+                <div class="password-wrapper">
+                    <input type="password" name="new_password" id="new_password" placeholder="New password" required>
+                    <button type="button" class="password-toggle-btn" onclick="togglePassword('new_password')">
+                        <i class="fas fa-eye-slash"></i>
+                    </button>
+                </div>
+                
+                <!-- Confirm Password Field with Toggle -->
+                <div class="password-wrapper">
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" required>
+                    <button type="button" class="password-toggle-btn" onclick="togglePassword('confirm_password')">
+                        <i class="fas fa-eye-slash"></i>
+                    </button>
+                </div>
+                
+                <button type="submit" class="btn-primary">Update Password</button>
+            </form>
+        </div>
+        
+        <!-- API Keys Management -->
+        <div class="card">
+            <h2><i class="fas fa-key"></i> API Keys Management</h2>
+            <div class="api-keys-list">
+                {% for model in models %}
+                <div class="api-key-item">
+                    <div class="api-key-info">
+                        <i class="fas fa-brain"></i>
+                        <strong>{{ model }}</strong>
+                        {% if user.api_keys and model in user.api_keys and user.api_keys[model] %}
+                            <span class="api-key-status status-saved">✓ Saved</span>
+                        {% else %}
+                            <span class="api-key-status status-missing">✗ Missing</span>
+                        {% endif %}
+                    </div>
+                    <button class="edit-btn" onclick="openApiModal('{{ model }}')">
+                        <i class="fas fa-edit"></i> {{ 'Update' if user.api_keys and model in user.api_keys and user.api_keys[model] else 'Add' }}
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Username Modal -->
+    <div id="usernameModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-user"></i> Change Username</h3>
+            <input type="text" id="newUsername" placeholder="New username" value="{{ user.username }}">
+            <div class="modal-buttons">
+                <button class="edit-btn" onclick="closeUsernameModal()">Cancel</button>
+                <button class="btn-primary" onclick="saveUsername()">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Email Modal -->
+    <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-envelope"></i> Change Email</h3>
+            <input type="email" id="newEmail" placeholder="New email" value="{{ user.email }}">
+            <div class="modal-buttons">
+                <button class="edit-btn" onclick="closeEmailModal()">Cancel</button>
+                <button class="btn-primary" onclick="saveEmail()">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- API Key Modal with Show/Hide -->
+    <div id="apiModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-key"></i> <span id="modalTitle">Update API Key</span></h3>
+            <input type="hidden" id="modalModelName">
+            <div class="password-wrapper">
+                <input type="password" id="modalApiKey" placeholder="Enter API key">
+                <button type="button" class="password-toggle-btn" onclick="toggleModalPassword()">
+                    <i class="fas fa-eye-slash"></i>
+                </button>
+            </div>
+            <div class="modal-buttons">
+                <button class="edit-btn" onclick="closeApiModal()">Cancel</button>
+                <button class="btn-primary" onclick="saveApiKey()">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            showToast('Recovery code copied to clipboard!', 'success');
+        }
+        
+        // Toggle password visibility for form fields
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const toggle = field.nextElementSibling;
+            const icon = toggle.querySelector('i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        }
+        
+        // Toggle password visibility for modal
+        function toggleModalPassword() {
+            const field = document.getElementById('modalApiKey');
+            const toggle = field.nextElementSibling;
+            const icon = toggle.querySelector('i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        }
+        
+        document.querySelectorAll('.flash-message').forEach(flash => {
+            const text = flash.textContent;
+            const classes = flash.className;
+            let type = 'info';
+            if (classes.includes('error')) type = 'error';
+            else if (classes.includes('success')) type = 'success';
+            if (text.trim()) showToast(text, type);
+        });
+        
+        // Username modal functions
+        function showEditUsernameModal() {
+            document.getElementById('usernameModal').style.display = 'flex';
+        }
+        
+        function closeUsernameModal() {
+            document.getElementById('usernameModal').style.display = 'none';
+        }
+        
+        async function saveUsername() {
+            const newUsername = document.getElementById('newUsername').value;
+            if (!newUsername) {
+                showToast('Username cannot be empty', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/update_username', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: newUsername })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('usernameDisplay').innerText = newUsername;
+                    showToast('Username updated successfully!', 'success');
+                    closeUsernameModal();
+                } else {
+                    showToast(data.error || 'Failed to update username', 'error');
+                }
+            } catch (error) {
+                showToast('Error: ' + error.message, 'error');
+            }
+        }
+        
+        // Email modal functions
+        function showEditEmailModal() {
+            document.getElementById('emailModal').style.display = 'flex';
+        }
+        
+        function closeEmailModal() {
+            document.getElementById('emailModal').style.display = 'none';
+        }
+        
+        async function saveEmail() {
+            const newEmail = document.getElementById('newEmail').value;
+            if (!newEmail) {
+                showToast('Email cannot be empty', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/update_email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: newEmail })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('emailDisplay').innerText = newEmail;
+                    showToast('Email updated successfully!', 'success');
+                    closeEmailModal();
+                } else {
+                    showToast(data.error || 'Failed to update email', 'error');
+                }
+            } catch (error) {
+                showToast('Error: ' + error.message, 'error');
+            }
+        }
+        
+        // API Key modal functions
+        function openApiModal(modelName) {
+            document.getElementById('modalModelName').value = modelName;
+            document.getElementById('modalTitle').innerHTML = modelName;
+            document.getElementById('modalApiKey').value = '';
+            document.getElementById('modalApiKey').type = 'password';
+            document.getElementById('apiModal').style.display = 'flex';
+            
+            // Reset the toggle button icon
+            const toggle = document.querySelector('#apiModal .password-toggle-btn i');
+            if (toggle) {
+                toggle.classList.remove('fa-eye');
+                toggle.classList.add('fa-eye-slash');
+            }
+        }
+        
+        function closeApiModal() {
+            document.getElementById('apiModal').style.display = 'none';
+        }
+        
+        async function saveApiKey() {
+            const modelName = document.getElementById('modalModelName').value;
+            const apiKey = document.getElementById('modalApiKey').value;
+            
+            if (!apiKey) {
+                showToast('Please enter an API key', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/update_api_key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ model_name: modelName, api_key: apiKey })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast(`API key saved for ${modelName}`, 'success');
+                    window.location.reload();
+                } else {
+                    showToast('Error: ' + (data.error || 'Failed to save API key'), 'error');
+                }
+            } catch (error) {
+                showToast('Error saving API key: ' + error.message, 'error');
+            }
+        }
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('usernameModal')) closeUsernameModal();
+            if (event.target == document.getElementById('emailModal')) closeEmailModal();
+            if (event.target == document.getElementById('apiModal')) closeApiModal();
+        }
+    </script>
+</body>
+</html>
