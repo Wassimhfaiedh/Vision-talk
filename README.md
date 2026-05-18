@@ -6,6 +6,29 @@
 
 ---
 
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td align="center"><b>Login Page</b></td>
+    <td align="center"><b>Video Analysis</b></td>
+  </tr>
+  <tr>
+    <td><img src="screenshot_login.png" width="480"/></td>
+    <td><img src="screenshot_video_analysis.png" width="480"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Semantic Search — Simple Query</b></td>
+    <td align="center"><b>Semantic Search — Detailed Query</b></td>
+  </tr>
+  <tr>
+    <td><img src="screenshot_search_1.png" width="480"/></td>
+    <td><img src="screenshot_search_2.png" width="480"/></td>
+  </tr>
+</table>
+
+---
+
 ## ✨ Features
 
 | Feature | Description |
